@@ -1,6 +1,10 @@
 const container = document.querySelector('.container')
 const display = document.querySelector('.display')
 
+// global variables
+let currNum = ''
+
+
 /**
  * Returns the sum of a and b
  * @param {number} a first operand
@@ -89,24 +93,39 @@ function showGrid(){
 
 showGrid()
 
+function showDisplay(){
+    display.textContent = currNum
+}
+
+
 /**
  * Takes button input 
  * @param {object} e last button press
  */
-function showDisplay(e){
-    console.log(e.target.textContent)
+function getDisplay(e){
     curr = e.target.textContent
 
     if (isNaN(curr)){
-        console.log("not a number")
+        if (curr === 'CLEAR'){
+            currNum = ''
+            showDisplay()
+        } else if(curr === 'DELETE'){
+            currNum = currNum.slice(0, -1)
+            showDisplay()
+        } else {
+            console.log('not number or clear/delete')
+        }
     } else {
-        console.log("NUMBER")
+        if (currNum.length < 7){
+            currNum += curr
+            showDisplay()
+        }
     }
 }
 
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => {
-    button.addEventListener('click', showDisplay)
+    button.addEventListener('click', getDisplay)
     button.addEventListener('mouseenter', function(e){
         this.classList.add('hover')
     })
