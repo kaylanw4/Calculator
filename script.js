@@ -1,25 +1,54 @@
 const container = document.querySelector('.container')
+const display = document.querySelector('.display')
 
-let num1 = 15
-let num2 = 5
-let operator
-
+/**
+ * Returns the sum of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns the sum of a and b
+ */
 function add(a, b){
     return a + b
 }
 
+
+/**
+ * Returns the difference of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns returns the difference of a and b
+ */
 function sub(a, b){
     return a - b
 }
 
+/**
+ * Returns the product of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns returns the product of a and b
+ */
 function multiply(a, b){
     return a * b
 }
 
+/**
+ * Returns the quotient of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns returns the quotient of a and b
+ */
 function divide(a, b){
     return a / b
 }
 
+/**
+ * Returns the result of the expression
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @param {string} operator +, -, *, /
+ * @returns result of the selected operation
+ */
 function operate(a, b, operator){
     switch (operator){
         case '+':
@@ -33,6 +62,10 @@ function operate(a, b, operator){
     }
 }
 
+
+/**
+ * Creates the calculator 
+ */
 function showGrid(){
     let text = '789/456*123-0.=+'
     for(let i = 0; i < 16; i++){
@@ -56,21 +89,28 @@ function showGrid(){
 
 showGrid()
 
+/**
+ * Takes button input 
+ * @param {object} e last button press
+ */
 function showDisplay(e){
-    console.log(e.srcElement.firstChild.textContent)
-}
+    console.log(e.target.textContent)
+    curr = e.target.textContent
 
-function hover(e){
-    this.classList.add('hover')
-}
-
-function removeTransition(e){
-    this.classList.remove('hover')
+    if (isNaN(curr)){
+        console.log("not a number")
+    } else {
+        console.log("NUMBER")
+    }
 }
 
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => {
     button.addEventListener('click', showDisplay)
-    button.addEventListener('mouseenter', hover)
-    button.addEventListener('mouseleave', removeTransition)
+    button.addEventListener('mouseenter', function(e){
+        this.classList.add('hover')
+    })
+    button.addEventListener('mouseleave', function(e){
+        this.classList.remove('hover')
+    })
 })
