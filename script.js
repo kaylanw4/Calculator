@@ -1,4 +1,4 @@
-
+const container = document.querySelector('.container')
 
 let num1 = 15
 let num2 = 5
@@ -33,5 +33,18 @@ function operate(a, b, operator){
     }
 }
 
+function showGrid(){
+    const cellHeight = 500 / 5
+    const cellWidth = 500 / 4
+    let text = '()%C789/456*123-0.=+'
+
+    for(let i = 0; i < 20; i++){
+        const btn = document.createElement('button')
+        btn.classList.add('button')
+        btn.textContent = `${text.split('')[i]}`
+        container.appendChild(btn)
+    }
+}
 
 console.log(operate(num1, num2, '/'))
+showGrid()
