@@ -34,21 +34,30 @@ function operate(a, b, operator){
 }
 
 function showGrid(){
-    let text = '()%C789/456*123-0.=+'
+    let text = '789/456*123-0.=+'
+    for(let i = 0; i < 16; i++){
+        let currText = `${text.split('')[i]}`
 
-    for(let i = 0; i < 20; i++){
         const btn = document.createElement('button')
         btn.classList.add('button')
-        btn.textContent = `${text.split('')[i]}`
-        btn.addEventListener('click', showDisplay)
-        btn.addEventListener('mouseenter', hover)
-        btn.addEventListener('mouseleave', removeTransition)
+        btn.textContent = currText
+
+        if ((i + 1) % 4 === 0){
+            btn.style.backgroundColor = 'orange'
+            console.log(currText)
+        } else if (i === 14){
+            btn.style.backgroundColor = 'royalblue'
+        } else {
+            btn.style.backgroundColor = 'lightgray'
+        }
         container.appendChild(btn)
     }
 }
 
+showGrid()
+
 function showDisplay(e){
-    console.log(e)
+    console.log(e.srcElement.firstChild.textContent)
 }
 
 function hover(e){
@@ -59,5 +68,9 @@ function removeTransition(e){
     this.classList.remove('hover')
 }
 
-console.log(operate(num1, num2, '/'))
-showGrid()
+const buttons = document.querySelectorAll('.button')
+buttons.forEach(button => {
+    button.addEventListener('click', showDisplay)
+    button.addEventListener('mouseenter', hover)
+    button.addEventListener('mouseleave', removeTransition)
+})
