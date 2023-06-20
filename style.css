@@ -1,5 +1,7 @@
 body {
     height: 100%;
+    font-family: 'Roboto', sans-serif;
+
 }
 
 .header, .main{
@@ -23,29 +25,45 @@ body {
     display: flex;
     justify-content: right;
     align-items: center;
-    height: 80px;
+    height: 100px;
     width: 480px;
-    margin: 10px;
+    margin: 5px;
     padding-right: 8px;
     font-size: 80px;
     font-family: 'Orbitron', sans-serif;
-    /* font-family: 'Roboto', sans-serif; */
     border-radius: 25px;
     background-color: lightgray;
 }
 
 .button {
-    height: 90px;
+    height: 86px;
     width: 115px;
     border-style: none;
     border-radius: 25px;
     margin: 5px;
     font-size: 20px;
-    background-color: lightgray;
     transition: 0.1s ease-in-out;
 }
 
+.big-buttons {
+    display: flex;
+}
+
+#clear, #delete {
+    width: 240px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#clear {
+    background-color: green;
+}
+
+#delete {
+    background-color: red;
+}
+
 .hover {
-    background-color: royalblue;
+    /* background-color: royalblue !important; */
     transform: translateY(-0.2rem);
 }
