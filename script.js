@@ -34,16 +34,29 @@ function operate(a, b, operator){
 }
 
 function showGrid(){
-    const cellHeight = 500 / 5
-    const cellWidth = 500 / 4
     let text = '()%C789/456*123-0.=+'
 
     for(let i = 0; i < 20; i++){
         const btn = document.createElement('button')
         btn.classList.add('button')
         btn.textContent = `${text.split('')[i]}`
+        btn.addEventListener('click', showDisplay)
+        btn.addEventListener('mouseenter', hover)
+        btn.addEventListener('mouseleave', removeTransition)
         container.appendChild(btn)
     }
+}
+
+function showDisplay(e){
+    console.log(e)
+}
+
+function hover(e){
+    this.classList.add('hover')
+}
+
+function removeTransition(e){
+    this.classList.remove('hover')
 }
 
 console.log(operate(num1, num2, '/'))
