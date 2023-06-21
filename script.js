@@ -12,12 +12,6 @@ showGrid()
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => {
     button.addEventListener('click', getDisplay)
-    button.addEventListener('mouseenter', function(e){
-        this.classList.add('hover')
-    })
-    button.addEventListener('mouseleave', function(e){
-        this.classList.remove('hover')
-    })
 })
 
 /**
