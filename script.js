@@ -102,12 +102,9 @@ function clearDisplay(a){
         operand1 = undefined
         operand2 = undefined
         operator = undefined
+        secondary.textContent = ''
     }
     showDisplay()
-}
-
-function showSecondary(){
-
 }
 
 function doOperation(op){
@@ -116,21 +113,25 @@ function doOperation(op){
         return
     } 
     if (!operator){
+        operand1 = currNum
         operator = op
-        showSecondary()
+        secondary.textContent = `${operand1} ${operator}`
         clearDisplay(1)
         return
     } 
+
     message.textContent = 'Please finish the previous expression'
     return
-    // if (op === '='){
-    //     if (operand1 && currNum && operator){
-    //         operand2 = currNum
-    //     }
-    // }
-    // if (!operand1){
-    //     operand1 = currNum
-    // }
+}
+
+function finishOperation(){
+    if (operand1 && currNum && operator){
+        operand2 = currNum
+        let answer = operate(operand1, operand2, operator)
+        currNum = answer
+        secondary.textContent = `${operand1} ${operator} ${operand2} = `
+        showDisplay()
+    }
 }
 
 /**
@@ -145,14 +146,14 @@ function getDisplay(e){
         if (curr === 'CLEAR'){
             clearDisplay(0)
         } else if(curr === 'DELETE'){
-            currNum = currNum.slice(0, -1)
+            currNum = currNum.toString().slice(0, -1)
             showDisplay()
         } else if(side.split('').includes(curr)){
             doOperation(curr)
         } else if(curr === '.'){
-            console.log('.')
+            console.log(".")
         } else {
-            console.log('=')
+            finishOperation()
         }
     } else {
         if (currNum.length < 7){
