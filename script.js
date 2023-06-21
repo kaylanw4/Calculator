@@ -1,5 +1,6 @@
 const container = document.querySelector('.container')
 const primary = document.querySelector('.primary')
+const secondary = document.querySelector('.secondary')
 const message = document.querySelector('.message-box')
 
 // global variables
@@ -95,6 +96,43 @@ function showDisplay(){
     primary.textContent = currNum
 }
 
+function clearDisplay(a){
+    currNum = ''
+    if (a === 0){
+        operand1 = undefined
+        operand2 = undefined
+        operator = undefined
+    }
+    showDisplay()
+}
+
+function showSecondary(){
+
+}
+
+function doOperation(op){
+    if (!currNum) {
+        message.textContent = 'No Operand!'
+        return
+    } 
+    if (!operator){
+        operator = op
+        showSecondary()
+        clearDisplay(1)
+        return
+    } 
+    message.textContent = 'Please finish the previous expression'
+    return
+    // if (op === '='){
+    //     if (operand1 && currNum && operator){
+    //         operand2 = currNum
+    //     }
+    // }
+    // if (!operand1){
+    //     operand1 = currNum
+    // }
+}
+
 /**
  * Takes button input 
  * @param {object} e last button press
@@ -105,13 +143,12 @@ function getDisplay(e){
 
     if (isNaN(curr) /*&& curr !== '.'*/){
         if (curr === 'CLEAR'){
-            currNum = ''
-            showDisplay()
+            clearDisplay(0)
         } else if(curr === 'DELETE'){
             currNum = currNum.slice(0, -1)
             showDisplay()
         } else if(side.split('').includes(curr)){
-            doOperation()
+            doOperation(curr)
         } else if(curr === '.'){
             console.log('.')
         } else {
@@ -125,17 +162,6 @@ function getDisplay(e){
         }
     }
 }
-
-function doOperation(){
-    if (!currNum) {
-        message.textContent = 'No Operand!'
-    } 
-    // if (!operand1){
-    //     operand1 = currNum
-    // }
-}
-
-
 
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => {
