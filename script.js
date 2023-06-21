@@ -7,6 +7,19 @@ const message = document.querySelector('.message-box')
 let currNum = ''
 let operand1, operand2, operator
 
+showGrid()
+
+const buttons = document.querySelectorAll('.button')
+buttons.forEach(button => {
+    button.addEventListener('click', getDisplay)
+    button.addEventListener('mouseenter', function(e){
+        this.classList.add('hover')
+    })
+    button.addEventListener('mouseleave', function(e){
+        this.classList.remove('hover')
+    })
+})
+
 /**
  * Creates the calculator 
  */
@@ -30,12 +43,17 @@ function showGrid(){
     }
 }
 
-showGrid()
-
+/**
+ * Displays the current number in the primary display
+ */
 function showDisplay(){
     primary.textContent = currNum
 }
 
+/**
+ * based on a, decide if we want to clear just the primary display or both
+ * @param {number} a switch
+ */
 function clearDisplay(a){
     currNum = ''
     if (a === 0){
@@ -47,10 +65,20 @@ function clearDisplay(a){
     showDisplay()
 }
 
-function showSecondary(){
-    secondary.textContent = `${operand1} ${operator}`
+/**
+ * clear the message textbox
+ */
+function clearMessage(){
+    message.textContent = ''
 }
 
+/**
+ * On operator button click, first check for errors, then clear the display for the
+ * second operand. If the previous expression is done, the answer becomes the first 
+ * operand
+ * @param {string} op operator
+ * @returns 
+ */
 function doOperation(op){
     if (!currNum) {
         message.textContent = 'No Operand!'
@@ -60,7 +88,8 @@ function doOperation(op){
         operand1 = currNum
         operand2 = undefined
         operator = op
-        showSecondary()
+        secondary.textContent = `${operand1} ${operator}`
+        clearMessage()
         clearDisplay(1) // only clear primary display
         return
     } 
@@ -69,12 +98,17 @@ function doOperation(op){
     return
 }
 
+/**
+ * when "=" is clicked, only do stuff when we have 2 operands and an operator
+ * basically just get answer through operate(), display the answer
+ */
 function finishOperation(){
     if (operand1 && currNum && operator){
         operand2 = currNum
         let answer = operate(operand1, operand2, operator)
         currNum = answer
         secondary.textContent = `${operand1} ${operator} ${operand2} = `
+        message.textContent = 'Done!'
         showDisplay()
     }
 }
@@ -89,9 +123,11 @@ function getDisplay(e){
 
     if (isNaN(curr) /*&& curr !== '.'*/){
         if (curr === 'CLEAR'){
+            clearMessage()
             clearDisplay(0)
         } else if(curr === 'DELETE'){
             currNum = currNum.toString().slice(0, -1)
+            clearMessage()
             showDisplay()
         } else if(side.split('').includes(curr)){
             doOperation(curr)
@@ -103,21 +139,11 @@ function getDisplay(e){
     } else {
         if (currNum.length < 7){
             currNum += curr
+            clearMessage()
             showDisplay()
         }
     }
 }
-
-const buttons = document.querySelectorAll('.button')
-buttons.forEach(button => {
-    button.addEventListener('click', getDisplay)
-    button.addEventListener('mouseenter', function(e){
-        this.classList.add('hover')
-    })
-    button.addEventListener('mouseleave', function(e){
-        this.classList.remove('hover')
-    })
-})
 
 /**
  * Returns the sum of a and b
@@ -160,6 +186,15 @@ function divide(a, b){
 }
 
 /**
+ * rounds a number
+ * @param {number} number number to be rounded
+ * @returns number rounded to the 1000s place
+ */
+function roundResult(number) {
+    return Math.round(number * 1000) / 1000
+}
+
+/**
  * Returns the result of the expression
  * @param {number} a first operand
  * @param {number} b second operand
@@ -171,12 +206,12 @@ function operate(a, b, operator){
     b = Number(b)
     switch (operator){
         case '+':
-            return add(a,b)
+            return roundResult(add(a,b))
         case '-':
-            return sub(a,b)
+            return roundResult(sub(a,b))
         case '*':
-            return multiply(a,b)
+            return roundResult(multiply(a,b))
         case '/':
-            return divide(a,b)
+            return roundResult(divide(a,b))
     }
 }
