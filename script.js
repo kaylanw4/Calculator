@@ -1,9 +1,9 @@
 const container = document.querySelector('.container')
-const display = document.querySelector('.display')
+const primary = document.querySelector('.primary')
 
 // global variables
 let currNum = ''
-
+let operand1, operand2, operator
 
 /**
  * Returns the sum of a and b
@@ -12,9 +12,8 @@ let currNum = ''
  * @returns the sum of a and b
  */
 function add(a, b){
-    return a + b
+    return parseInt(a) + parseInt(b)
 }
-
 
 /**
  * Returns the difference of a and b
@@ -23,7 +22,7 @@ function add(a, b){
  * @returns returns the difference of a and b
  */
 function sub(a, b){
-    return a - b
+    return parseInt(a) - parseInt(b)
 }
 
 /**
@@ -33,7 +32,7 @@ function sub(a, b){
  * @returns returns the product of a and b
  */
 function multiply(a, b){
-    return a * b
+    return parseInt(a) * parseInt(b)
 }
 
 /**
@@ -43,7 +42,7 @@ function multiply(a, b){
  * @returns returns the quotient of a and b
  */
 function divide(a, b){
-    return a / b
+    return parseInt(a) / parseInt(b)
 }
 
 /**
@@ -81,7 +80,6 @@ function showGrid(){
 
         if ((i + 1) % 4 === 0){
             btn.style.backgroundColor = 'orange'
-            console.log(currText)
         } else if (i === 14){
             btn.style.backgroundColor = 'royalblue'
         } else {
@@ -94,26 +92,28 @@ function showGrid(){
 showGrid()
 
 function showDisplay(){
-    display.textContent = currNum
+    primary.textContent = currNum
 }
-
 
 /**
  * Takes button input 
  * @param {object} e last button press
  */
 function getDisplay(e){
-    curr = e.target.textContent
+    let curr = e.target.textContent
+    let side = '+-*/'
 
-    if (isNaN(curr)){
+    if (isNaN(curr) && curr !== '.'){
         if (curr === 'CLEAR'){
             currNum = ''
             showDisplay()
         } else if(curr === 'DELETE'){
             currNum = currNum.slice(0, -1)
             showDisplay()
-        } else {
+        } else if(side.split('').includes(curr)){
             console.log('not number or clear/delete')
+        } else {
+            console.log('=')
         }
     } else {
         if (currNum.length < 7){
