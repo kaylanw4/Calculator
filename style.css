@@ -1,13 +1,16 @@
 body {
-    height: 100%;
     font-family: 'Roboto', sans-serif;
-}
-
-.header, .main{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+/* .header, .main, .alerts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
 
 .container {
     display: flex;
@@ -79,4 +82,18 @@ body {
 .hover {
     /* background-color: royalblue !important; */
     transform: translateY(-0.2rem);
+}
+
+.message-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 500px;
+    margin: 30px;
+    padding: 8px;
+    font-size: x-large;
+    font-weight: bold;
+    background-color: gray;
+    border-radius: 25px;
 }

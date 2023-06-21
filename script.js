@@ -1,5 +1,6 @@
 const container = document.querySelector('.container')
 const primary = document.querySelector('.primary')
+const message = document.querySelector('.message-box')
 
 // global variables
 let currNum = ''
@@ -65,7 +66,6 @@ function operate(a, b, operator){
     }
 }
 
-
 /**
  * Creates the calculator 
  */
@@ -103,7 +103,7 @@ function getDisplay(e){
     let curr = e.target.textContent
     let side = '+-*/'
 
-    if (isNaN(curr) && curr !== '.'){
+    if (isNaN(curr) /*&& curr !== '.'*/){
         if (curr === 'CLEAR'){
             currNum = ''
             showDisplay()
@@ -111,17 +111,31 @@ function getDisplay(e){
             currNum = currNum.slice(0, -1)
             showDisplay()
         } else if(side.split('').includes(curr)){
-            console.log('not number or clear/delete')
+            doOperation()
+        } else if(curr === '.'){
+            console.log('.')
         } else {
             console.log('=')
         }
     } else {
         if (currNum.length < 7){
             currNum += curr
+            message.textContent = 'blah'
             showDisplay()
         }
     }
 }
+
+function doOperation(){
+    if (!currNum) {
+        message.textContent = 'No Operand!'
+    } 
+    // if (!operand1){
+    //     operand1 = currNum
+    // }
+}
+
+
 
 const buttons = document.querySelectorAll('.button')
 buttons.forEach(button => {
