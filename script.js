@@ -8,66 +8,6 @@ let currNum = ''
 let operand1, operand2, operator
 
 /**
- * Returns the sum of a and b
- * @param {number} a first operand
- * @param {number} b second operand
- * @returns the sum of a and b
- */
-function add(a, b){
-    return parseInt(a) + parseInt(b)
-}
-
-/**
- * Returns the difference of a and b
- * @param {number} a first operand
- * @param {number} b second operand
- * @returns returns the difference of a and b
- */
-function sub(a, b){
-    return parseInt(a) - parseInt(b)
-}
-
-/**
- * Returns the product of a and b
- * @param {number} a first operand
- * @param {number} b second operand
- * @returns returns the product of a and b
- */
-function multiply(a, b){
-    return parseInt(a) * parseInt(b)
-}
-
-/**
- * Returns the quotient of a and b
- * @param {number} a first operand
- * @param {number} b second operand
- * @returns returns the quotient of a and b
- */
-function divide(a, b){
-    return parseInt(a) / parseInt(b)
-}
-
-/**
- * Returns the result of the expression
- * @param {number} a first operand
- * @param {number} b second operand
- * @param {string} operator +, -, *, /
- * @returns result of the selected operation
- */
-function operate(a, b, operator){
-    switch (operator){
-        case '+':
-            return add(a,b)
-        case '-':
-            return sub(a,b)
-        case '*':
-            return multiply(a,b)
-        case '/':
-            return divide(a,b)
-    }
-}
-
-/**
  * Creates the calculator 
  */
 function showGrid(){
@@ -107,16 +47,21 @@ function clearDisplay(a){
     showDisplay()
 }
 
+function showSecondary(){
+    secondary.textContent = `${operand1} ${operator}`
+}
+
 function doOperation(op){
     if (!currNum) {
         message.textContent = 'No Operand!'
         return
     } 
-    if (!operator){
+    if (!operator || operand2){
         operand1 = currNum
+        operand2 = undefined
         operator = op
-        secondary.textContent = `${operand1} ${operator}`
-        clearDisplay(1)
+        showSecondary()
+        clearDisplay(1) // only clear primary display
         return
     } 
 
@@ -158,7 +103,6 @@ function getDisplay(e){
     } else {
         if (currNum.length < 7){
             currNum += curr
-            message.textContent = 'blah'
             showDisplay()
         }
     }
@@ -174,3 +118,65 @@ buttons.forEach(button => {
         this.classList.remove('hover')
     })
 })
+
+/**
+ * Returns the sum of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns the sum of a and b
+ */
+function add(a, b){
+    return a + b
+}
+
+/**
+ * Returns the difference of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns returns the difference of a and b
+ */
+function sub(a, b){
+    return a - b
+}
+
+/**
+ * Returns the product of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns returns the product of a and b
+ */
+function multiply(a, b){
+    return a * b
+}
+
+/**
+ * Returns the quotient of a and b
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns returns the quotient of a and b
+ */
+function divide(a, b){
+    return a / b
+}
+
+/**
+ * Returns the result of the expression
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @param {string} operator +, -, *, /
+ * @returns result of the selected operation
+ */
+function operate(a, b, operator){
+    a = Number(a)
+    b = Number(b)
+    switch (operator){
+        case '+':
+            return add(a,b)
+        case '-':
+            return sub(a,b)
+        case '*':
+            return multiply(a,b)
+        case '/':
+            return divide(a,b)
+    }
+}
